@@ -22,22 +22,24 @@ class LocationGraph(Graph):
         tail_x_coord = self.location[tail][0]
         arcs = []
 
-        for row in range(len(self.location)):
+        for row in self.location:
+
             if self.location[row][1] == tail_y_coord:
                 head_x_coord = self.location[row][0]
-                distance = head_x_coord - tail_x_coord
+                distance = float(head_x_coord - tail_x_coord)
 
                 if distance <= self.radius:
-                    arcs.append(Arc(tail, self.location[row], str(tail) + '->' + str(self.location[row]), cost = distance))
+                    if self.location[row] != self.location[tail]:
+                        arcs.append(Arc(tail, row, str(tail) + '->' + row, cost = distance))
 
             else:
                 x_distance = self.location[row][0] - self.location[tail][0]
                 y_distance = self.location[row][1] - self.location[tail][1]
-                distance = sqrt(x_distance^2 + y_distance^2)
+                distance = sqrt(x_distance**2 + y_distance**2)
                 
                 if distance <= self.radius:
-                    arcs.append(Arc(tail, self.location[row], str(tail) + '->' + str(self.location[row]),cost = distance))
-
+                    arcs.append(Arc(tail, row, str(tail) + '->' + str(row),cost = distance))
+        return arcs
             
 
             
